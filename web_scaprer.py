@@ -13,11 +13,11 @@ HEADERS = {'User-agent': 'Currently building an app'}
 # page=requests.get(URL, headers = HEADERS)
 # print(page)
 
-# with open('WSBDDAggregator/page_response.txt', 'w') as outfile:
+# with open('Wall-Street-Bets-DD-Tracker/page_response.txt', 'w') as outfile:
 #     outfile.write(page.text)
 
 #use while testing to avoid spamming
-with open('WSBDDAggregator/page_response.txt', 'r') as infile:
+with open('Wall-Street-Bets-DD-Tracker/page_response.txt', 'r') as infile:
     data = infile.read()
 
 soup = BeautifulSoup(data, 'html.parser') #FIXME: replace with page.content when launched
