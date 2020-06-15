@@ -1,19 +1,14 @@
-import requests
-from bs4 import BeautifulSoup
+class DDPost:
 
-HEADERS = {'User-agent': 'Currently building an app'}
-
-class DD_Post:
-
-    def __init__(self, url):
-        self.url = url
-        self.post_body = self.get_post_body(self.url)
+    def __init__(self, post):
+        self.post = post
+        self.get_post_info()
 
 
-    def get_post_body(self, url):
-        post_page = requests.get(url, headers=HEADERS)
-        soup = BeautifulSoup(post_page.content, 'html.parser')
+    def get_post_info(self):
+        self.body = self.post.selftext
+        self.itle = self.post.title
+        self.author = self.post.author
+        self.id = self.post.id
 
-        post_body = soup.find_all('div', {'class' : 'md'})[1]
-
-        return post_body
+        

@@ -1,35 +1,16 @@
-import requests
-from bs4 import BeautifulSoup
-import time
-from dd_post import DD_Post
+import praw
+from dd_post import DDPost
+import secret
 
-URL='https://ns.reddit.com/r/wallstreetbets/search?sort=top&q=flair%3ADD&restrict_sr=on&t=day'
-DD_CLASS = 'search-result search-result-link has-thumbnail has-linkflair linkflair-dd'
-WSB_PREFIX = 'https://ns.reddit.com'
-HEADERS = {'User-agent': 'Currently building an app'}
+REDDIT = praw.Reddit(client_id=secret.client_id,
+                     client_secret=secret.secret,
+                     user_agent= secret.user_agent)
 
-#FIXME: Uncomment to use with online data
-# time.sleep(2)
+WSB = REDDIT.subreddit('wallstreetbets')
 
-# page=requests.get(URL, headers = HEADERS)
-# print(page)
+posts = []
 
-# with open('Wall-Street-Bets-DD-Tracker/page_response.txt', 'w') as outfile:
-#     outfile.write(page.text)
-
-#use while testing to avoid spamming
-with open('Wall-Street-Bets-DD-Tracker/page_response.txt', 'r') as infile:
-    data = infile.read()
-
-soup = BeautifulSoup(data, 'html.parser') #FIXME: replace with page.content when launched
-
-all_posts = soup.find('div', class_='contents')
-
-dd_post_list = []
-
-for dd_post in all_posts.find_all('div', {'class' : DD_CLASS}): #guarantees it's a DD post
+for dd_post in WSB.search('DD', time_filter='day', sort='top', limit=4): #FIXME: remove limit when not testing
     #TODO: Filter out posts already aggregated
-    full_url = WSB_PREFIX + dd_post.find('a')['href']
-    post_obj = DD_Post(full_url)
-
-        
+    post_obj = DDPost(dd_post)
+    posts.append(post_obj)
