@@ -7,7 +7,7 @@ import re
 
 import pickle
 
-STOP_LIST = {'DD', 'COVID', 'TLDR', 'IF', 'PUTS', 'AND', 'OR', 'TO', 'WHAT'}
+STOP_LIST = {'DD', 'COVID', 'TLDR', 'IF', 'PUTS', 'AND', 'OR', 'TO', 'WHAT', 'US', 'USA'}
 
 
 def filter_ticker_symbol(post):
